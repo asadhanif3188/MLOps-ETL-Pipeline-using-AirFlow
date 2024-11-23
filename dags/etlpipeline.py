@@ -93,3 +93,12 @@ with DAG(
     # Step 5: Verify the data using DBeaver 
 
     # Step 6: Define the dependencies 
+    
+    # Extract
+    create_table() >> extract_apod
+    api_response = extract_apod.output
+    # Transform
+    transformed_data = transform_apod_data(api_response)
+    # Load 
+    load_data_to_postgres(transformed_data)
+
