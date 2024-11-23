@@ -51,7 +51,19 @@ with DAG(
     )
 
     # Step 3: Transform the data (Pick the information that I need to save)
+    @task
+    def transform_apod_data(response):
+        # Transform the data
+        transformed_data = {
+            "title": response.get("title", ""),
+            "explanation": response.get("explanation", ""),
+            "url": response.get("url", ""),
+            "media_type": response.get("media_type", ""),
+            "date": response.get("date", "")
+        }
 
+        return transformed_data
+    
     # Step 4: Load the data into the PostgreSQL database
 
     # Step 5: Verify the data using DBeaver 
