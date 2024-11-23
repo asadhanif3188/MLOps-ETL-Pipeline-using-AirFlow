@@ -7,7 +7,7 @@ import json
 
 # Define DAG
 with DAG(
-    dag_id="nasa_apod_postgre",
+    dag_id="nasa_apod_postgres",
     start_date=days_ago(1),
     schedule_interval='@daily',
     catchup=False

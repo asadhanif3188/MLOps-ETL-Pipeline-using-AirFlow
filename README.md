@@ -28,7 +28,6 @@ This pipeline is storing/loading the data to an hosted Postgres DB offered by Ne
 <img src="images/4.Postgres-db.png" width="80%"/>
 
 
-
 This repo is directly connected with Astronomer to deploy automatically. 
 
 **Note:** *This repo demonstrates the skill set working with Pipelines using AirFlow*.
