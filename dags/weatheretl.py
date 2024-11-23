@@ -25,14 +25,14 @@ with DAG(
     is_weather_api_ready = HttpSensor(
         task_id = 'is_weather_api_ready',
         http_conn_id = 'open_weather_connection',
-        endpoint = f"/data/2.5/weather?q={CITY_NAME}&appid={API_KEY}"
+        endpoint = f"data/2.5/weather?q={CITY_NAME}&appid={API_KEY}"
     )
 
     # Task 2: Check if API is ready/active
     extract_weather_data = SimpleHttpOperator(
         task_id = 'extract_weather_data',
         http_conn_id = 'open_weather_connection',
-        endpoint = f"/data/2.5/weather?q={CITY_NAME}&appid={API_KEY}",
+        endpoint = f"data/2.5/weather?q={CITY_NAME}&appid={API_KEY}",
         method = 'GET',
         response_filter = lambda response: json.loads(response.text),
         log_response = True
