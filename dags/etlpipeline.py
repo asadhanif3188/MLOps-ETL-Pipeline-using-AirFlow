@@ -35,7 +35,20 @@ with DAG(
 
         return "Table created successfully"
 
-    # Step 2: Extract the NASA API Data (APOD) 
+    # Step 2: Extract the NASA API Data (APOD)-Astronomy Picture of the Day 
+
+    # kc5L7Kq7fvPIMYONOsByxAS8u1dMgbomS9sB199u 
+    # https://api.nasa.gov/planetary/apod?api_key=kc5L7Kq7fvPIMYONOsByxAS8u1dMgbomS9sB199u
+
+    extract_apod = SimpleHttpOperator(
+        task_id = "extract_apod",
+        http_conn_id = "nasa_api",  # connection id defined in airflow for nasa api 
+        endpoint = "/planetary/apod", # nasa api endpoint for APOD 
+        method = "GET",
+        data={"api_key" : "{{ conn.nasa_api.extra_dejson.api_key }}"}, # use the api key from the connection 
+        response_filter = lambda response: response.json(), # filter the response to json
+        log_response = True 
+    )
 
     # Step 3: Transform the data (Pick the information that I need to save)
 
