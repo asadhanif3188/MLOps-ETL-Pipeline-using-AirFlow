@@ -26,7 +26,7 @@ with DAG(
             explanation TEXT,
             url TEXT,
             media_type VARCHAR(50),
-            date DATE,
+            date DATE
         );
         """
 
@@ -43,7 +43,7 @@ with DAG(
     extract_apod = SimpleHttpOperator(
         task_id = "extract_apod",
         http_conn_id = "nasa_api",  # connection id defined in airflow for nasa api 
-        endpoint = "/planetary/apod", # nasa api endpoint for APOD 
+        endpoint = "planetary/apod", # nasa api endpoint for APOD 
         method = "GET",
         data={"api_key" : "{{ conn.nasa_api.extra_dejson.api_key }}"}, # use the api key from the connection 
         response_filter = lambda response: response.json(), # filter the response to json
