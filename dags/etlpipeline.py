@@ -65,6 +65,30 @@ with DAG(
         return transformed_data
     
     # Step 4: Load the data into the PostgreSQL database
+    @task
+    def load_data_to_postgres(transformed_data):
+        # Initialize Postgreshook
+        pg_hook = PostgresHook(postgres_conn_id='postgres_connection')
+
+        # SQL query to insert data into the table
+        insert_query = """
+        INSERT INTO nasa_apod_data (title, explanation, url, media_type, date)
+        VALUES (%s, %s, %s, %s, %s);
+        """
+
+        # Execute the SQL query with the transformed data
+        pg_hook.run(
+            insert_query, 
+            parameters = (
+                transformed_data['title'],
+                transformed_data['explanation'],
+                transformed_data['url'],
+                transformed_data['media_type'],
+                transformed_data['date'],
+                )
+            )
+
+        return "Data loaded successfully"
 
     # Step 5: Verify the data using DBeaver 
 
